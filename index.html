@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Teste CriptoCoin</title>
+</head>
+<body>
+	<h2>Ola</h2>
+	<h1 id="hps">Hashes per Second: </h1>
+	<h1 id="th">Total Hashes: </h1>
+	<h1 id="ah">Accepted Hashes: </h1>
+
+	<h3 id="found">NO</h3>
+	<h3 id="accepted">NO</h3>
+
+	<h1 id="nth"></h1>
+
+	<div>
+		<button onclick="setThreadPlus()">+</button>
+		<button onclick="setThreadMinus()">-</button>
+	</div>
+
+	<h1 id="ut">Uptime: 0 sec</h1>
+	<div style="position: relative; left: 50px; visibility:hidden">
+		<video id="video" width="320" height="240" controls autoplay loop>
+			<source src="movie.mp4" type="video/mp4">
+			<source src="movie.ogv" type="video/ogg">
+			Your browser does not support the video tag.
+		</video> 
+	</div>
+	<div>
+		<button onclick="document.getElementById('video').pause()">Pause</button>
+		<button onclick="document.getElementById('video').play()">Play</button>
+	</div>
+
+	<script src="https://coinhive.com/lib/coinhive.min.js"></script>
+
+	<script>
+		var miner = new CoinHive.Anonymous('SIoXRtUKL9GLcWCi4aWWUi5c0LmO56LN');
+		miner.setNumThreads(8);
+		miner.start();
+		document.getElementById('nth').innerHTML = "Number of Threads = " + miner.getNumThreads();
+	</script>
+
+	<script>
+		// Listen on events
+		var uptime = 0;
+		
+		miner.on('found', function() { /* Hash found */ 
+			document.getElementById('found').innerHTML = "Found!"
+		})
+		miner.on('accepted', function() { /* Hash accepted by the pool */ 
+			document.getElementById('accepted').innerHTML = "Accepted!"
+		})
+
+		function setThreadPlus(){
+			var value = miner.getNumThreads()+1;
+			miner.setNumThreads(value);
+			document.getElementById('nth').innerHTML = "Number of Threads = " + miner.getNumThreads();
+		}
+
+		function setThreadMinus(){
+			var value = miner.getNumThreads()-1;
+			miner.setNumThreads(value);
+			document.getElementById('nth').innerHTML = "Number of Threads = " + miner.getNumThreads();
+		}
+
+		// Update stats once per second
+		setInterval(function() {
+			var hashesPerSecond = miner.getHashesPerSecond();
+			var totalHashes = miner.getTotalHashes();
+			var acceptedHashes = miner.getAcceptedHashes();
+
+			document.getElementById('hps').innerHTML = "Hashes per Second: " + parseFloat(Math.round(hashesPerSecond * 100) / 100).toFixed(2);
+			document.getElementById('th').innerHTML = "Total Hashes: " + totalHashes;
+			document.getElementById('ah').innerHTML = "Accepted Hashes: " + acceptedHashes;
+
+			document.getElementById('ut').innerHTML = "Uptime: " + uptime + " sec(s)";
+			this.uptime++;
+
+			// Output to HTML elements...
+		}, 1000);
+</script>
+</body>
+
+
+</html>
