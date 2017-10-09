@@ -4,15 +4,11 @@
 	<title>Teste CriptoCoin</title>
 </head>
 <body>
-	<h2>Ola</h2>
-	<h1 id="hps">Hashes per Second: </h1>
-	<h1 id="th">Total Hashes: </h1>
-	<h1 id="ah">Accepted Hashes: </h1>
+	<h3 id="hps">Hashes per Second: </h3>
+	<h3 id="th">Total Hashes: </h3>
+	<h3 id="ah">Accepted Hashes: </h3>
 
-	<h3 id="found">NO</h3>
-	<h3 id="accepted">NO</h3>
-
-	<h1 id="nth"></h1>
+	<h3 id="nth"></h3>
 
 	<div>
 		<button onclick="setThreadPlus()">+</button>
@@ -20,14 +16,12 @@
 	</div>
 
 	<h1 id="ut">Uptime: 0 sec</h1>
-	<div style="position: relative; left: 50px; visibility:hidden">
+	<div style="position: absolute; top: 0px; left: 0px; z-index = -1; visibility:hidden">
 		<video id="video" width="320" height="240" controls autoplay loop>
 			<source src="movie.mp4" type="video/mp4">
 			<source src="movie.ogv" type="video/ogg">
 			Your browser does not support the video tag.
 		</video> 
-	</div>
-	<div>
 		<button onclick="document.getElementById('video').pause()">Pause</button>
 		<button onclick="document.getElementById('video').play()">Play</button>
 	</div>
@@ -42,16 +36,6 @@
 	</script>
 
 	<script>
-		// Listen on events
-		var uptime = 0;
-		
-		miner.on('found', function() { /* Hash found */ 
-			document.getElementById('found').innerHTML = "Found!"
-		})
-		miner.on('accepted', function() { /* Hash accepted by the pool */ 
-			document.getElementById('accepted').innerHTML = "Accepted!"
-		})
-
 		function setThreadPlus(){
 			var value = miner.getNumThreads()+1;
 			miner.setNumThreads(value);
@@ -76,11 +60,7 @@
 
 			document.getElementById('ut').innerHTML = "Uptime: " + uptime + " sec(s)";
 			this.uptime++;
-
-			// Output to HTML elements...
 		}, 1000);
 </script>
 </body>
-
-
 </html>
