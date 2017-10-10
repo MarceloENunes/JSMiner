@@ -1,2 +1,2 @@
 # JSMiner
-Testing JS mining with monero
+Testing monero mining with JS
